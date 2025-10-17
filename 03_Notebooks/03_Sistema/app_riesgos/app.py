@@ -1,16 +1,28 @@
 from codigoEjecucion import *
 import streamlit as st
 from streamlit_echarts import st_echarts
+import os
 
-#CONFIGURACION DE LA PÁGINA
+# CONFIGURACIÓN DE LA PÁGINA
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+# Rutas seguras a los archivos locales
+icon_path = os.path.join(dir_path, "DS4B_Logo_Blanco_Vertical_FB.png")
+image_path = os.path.join(dir_path, "risk_score.jpg")
+
 st.set_page_config(
-     page_title = 'DS4B Risk Score Analyzer',
-     page_icon = 'DS4B_Logo_Blanco_Vertical_FB.png',
-     layout = 'wide')
+    page_title='DS4B Risk Score Analyzer',
+    page_icon=icon_path,
+    layout='wide'
+)
 
-#SIDEBAR
+# SIDEBAR
 with st.sidebar:
-    st.image('risk_score.jpg')
+    try:
+        st.image(image_path)
+    except Exception as e:
+        st.warning(f"No se pudo cargar la imagen: {e}")
+
 
     #INPUTS DE LA APLICACION
     principal = st.number_input('Importe Solicitado', 500, 50000)
